@@ -84,7 +84,8 @@ class PokeRadioFrontend(pykka.ThreadingActor, CoreListener, Base):
         self.playlist_endpoint = 'http://{0}:{1}/api/mopidy/'\
                 .format(hostname, port)
 
-        self.r_conn = redis.StrictRedis(redis_host, redis_port, redis_db,
+        self.r_conn = redis.StrictRedis(redis_host, redis_port, 
+                                        db=redis_db,
                                         password=redis_password)
         self.connect_to_redis()
 
