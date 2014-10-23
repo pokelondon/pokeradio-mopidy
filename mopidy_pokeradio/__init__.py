@@ -19,13 +19,18 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
+
+        # API Endpoint
         schema['hostname'] = config.Hostname(optional=False)
         schema['port'] = config.Integer(optional=False)
-        schema['redis_db'] = config.Integer(optional=False)
-        schema['redis_port'] = config.Integer(optional=True)
-        schema['redis_password'] = config.Integer(optional=True)
-        return schema
 
+        # Redis Server
+        schema['redis_hostname'] = config.Integer(optional=True)
+        schema['redis_db'] = config.Integer(optional=True)
+        schema['redis_port'] = config.Integer(optional=True)
+        schema['redis_password'] = config.Secret(optional=True)
+
+        return schema
 
     def setup(self, registry):
         """ Register the frontend class of this extension

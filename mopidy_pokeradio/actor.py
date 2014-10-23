@@ -76,15 +76,15 @@ class PokeRadioFrontend(pykka.ThreadingActor, CoreListener, Base):
         hostname = config['pokeradio']['hostname']
         port = config['pokeradio']['port']
 
-        redis_host = config['pokeradio']['hostname']
-        redis_db = config['pokeradio']['redis_db']
+        redis_host = config['pokeradio']['redis_hostname']
+        redis_db = config['pokeradio'].get('redis_db', None)
         redis_port = config['pokeradio'].get('redis_port', 6379)
-        redis_password = config['pokeradio'].get('password', None)
+        redis_password = config['pokeradio'].get('redis_password', None)
 
         self.playlist_endpoint = 'http://{0}:{1}/api/mopidy/'\
                 .format(hostname, port)
 
-        self.r_conn = redis.StrictRedis(redis_host, redis_port, redis_db,
+        self.r_conn = redis.StrictRedis(redis_host, redis_port, db=redis_db,
                                         password=redis_password)
         self.connect_to_redis()
 
